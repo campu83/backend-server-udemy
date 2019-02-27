@@ -39,14 +39,12 @@ async function verify(token) {
 app.post('/google', async(req, res) => {
 
     var token = req.body.token;
-
     var googleUser = await verify(token).catch(e => {
         return res.status(403).json({
             ok: false,
             mensaje: 'Token no válido'
         });
     });
-
     Usuario.findOne({ email: googleUser.email }, (err, usuarioDB) => {
 
         if (err) {
@@ -58,7 +56,7 @@ app.post('/google', async(req, res) => {
         }
 
         if (usuarioDB) {
-            if (usuario.google === false) {
+            if (usuarioDB.google === false) {
                 return res.status(400).json({
                     ok: false,
                     mensaje: 'Debe usar su autenticación normal'
@@ -79,7 +77,7 @@ app.post('/google', async(req, res) => {
             usuario.nombre = googleUser.nombre;
             usuario.email = googleUser.email;
             usuario.img = googleUser.img;
-            usuario.google = googleUser.true;
+            usuario.google = true;
             usuario.password = ':)';
 
             usuario.save((err, usuarioDB) => {

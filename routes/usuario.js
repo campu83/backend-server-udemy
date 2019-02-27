@@ -17,7 +17,7 @@ app.get('/', (req, res, next) => { //request, response, next
     var desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Usuario.find({}, 'nombre email img role')
+    Usuario.find({}, 'nombre email img role google')
         // Con skip y limit resolvemos la paginacion.
         .skip(desde) //Con esto indicamos el numero de registros que queremos que salte
         .limit(5) //Con esto indicamos el numero de registros que queremos de vuelta
@@ -128,7 +128,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 // ============================================================
 // Crear un nuevo usuario
 // ============================================================
-app.post('/', mdAutenticacion.verificaToken, (req, res) => {
+app.post('/', (req, res) => {
 
     var body = req.body;
 
